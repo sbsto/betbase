@@ -7,6 +7,6 @@ export default defineConfig({
 	schema: `./${name}/drizzle/schema.ts`,
 	dialect: 'postgresql',
 	dbCredentials: {
-		url: `${process.env.DATABASE_URL}/auth?sslmode=disable`,
+		url: 'postgresql://betbase-kbyi:local@127.0.0.1:9500/user?sslmode=disable',
 	},
 });
