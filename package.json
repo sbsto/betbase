@@ -1,0 +1,32 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "packageManager": "npm@10.8.2",
+  "engines": {
+    "node": "20.18.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "tooling/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check": "turbo check",
+    "check:watch": "turbo check:watch",
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "check:format": "turbo check:format",
+    "check:lint": "turbo check:lint",
+    "checks": "turbo checks"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "turbo": "^2.1.2"
+  }
+}

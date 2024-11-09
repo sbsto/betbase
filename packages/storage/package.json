@@ -1,0 +1,30 @@
+{
+	"$schema": "https://json.schemastore.org/package",
+	"name": "@clarity/storage",
+	"version": "1.0.0",
+	"description": "",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./src/index.ts"
+		}
+	},
+	"scripts": {
+		"dev": "turbo dev",
+		"build": "tsc",
+		"check": "tsc --noEmit",
+		"check:watch": "tsc --noEmit --watch",
+		"lint": "biome lint --write .",
+		"format": "biome format --write .",
+		"check:format": "biome format .",
+		"check:lint": "biome lint .",
+		"checks": "pnpm check:format && pnpm check:lint && pnpm check"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.2",
+		"typescript": "^5.0.0"
+	}
+}
