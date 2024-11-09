@@ -1,4 +1,4 @@
 {
-	"id":   "betbase-k86i",
+	"id":   "betbase-kbyi",
 	"lang": "typescript"
 }
