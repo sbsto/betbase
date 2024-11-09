@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import '@clarity/tailwind/vars';
+	import '@betbase/tailwind/vars';
 	let { children } = $props();
 </script>
 

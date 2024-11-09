@@ -1,5 +1,5 @@
 {
-	"name": "@clarity/ui",
+	"name": "@betbase/ui",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
@@ -33,7 +33,7 @@
 		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
-		"@clarity/tailwind": "1.0.0",
+		"@betbase/tailwind": "1.0.0",
 		"@sveltejs/adapter-auto": "^3.3.1",
 		"@sveltejs/kit": "^2.7.4",
 		"@sveltejs/package": "^2.0.0",

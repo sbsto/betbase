@@ -1,1 +1,0 @@
-ALTER TABLE "otp" DROP COLUMN IF EXISTS "used_at";

@@ -1,5 +1,5 @@
 {
-  "name": "@clarity/tailwind",
+  "name": "@betbase/tailwind",
   "exports": {
     "./config": "./tailwind.config.js",
     "./vars": "./vars.css"

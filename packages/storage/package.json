@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/package",
-	"name": "@clarity/storage",
+	"name": "@betbase/storage",
 	"version": "1.0.0",
 	"description": "",
 	"exports": {

@@ -1,5 +1,5 @@
 {
-	"name": "@clarity/api",
+	"name": "@betbase/api",
 	"private": true,
 	"version": "0.0.1",
 	"description": "Encore URL Shortener Tutorial",
