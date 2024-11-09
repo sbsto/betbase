@@ -14,7 +14,7 @@
     "check:lint": "biome lint .",
     "checks": "npm run check:format && npm run check:lint && npm run check",
     "gen:migration": "./scripts/generate-migration.sh",
-    "gen:client": "encore gen client --services=user --lang=typescript --env=local -o=../app/src/lib/api/client.ts"
+    "gen:client": "encore gen client --services=user --lang=typescript --env=local -o=../app/src/lib/api/gen.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
