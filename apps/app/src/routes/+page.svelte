@@ -13,4 +13,5 @@
 	<h1>BetBase</h1>
 	<button onclick={handleSayHello}>Say hello to Sam</button>
 	<p>{greeting}</p>
+	<input type="text" placeholder="Search for a team" class="border border-neutral-50" />
 </main>
