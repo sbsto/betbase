@@ -30,6 +30,7 @@ export function PreviewEnv(pr: number | string): BaseURL {
  * Client is an API client for the betbase-kbyi Encore application.
  */
 export default class Client {
+    public readonly user: user.ServiceClient
 
 
     /**
@@ -40,6 +41,7 @@ export default class Client {
      */
     constructor(target: BaseURL, options?: ClientOptions) {
         const base = new BaseClient(target, options ?? {})
+        this.user = new user.ServiceClient(base)
     }
 }
 
@@ -56,6 +58,35 @@ export interface ClientOptions {
 
     /** Default RequestInit to be used for the client */
     requestInit?: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
+}
+
+export namespace user {
+    export interface HelloParams {
+        name: string
+    }
+
+    export interface HelloResponse {
+        message: string
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+        }
+
+        public async hello(params: HelloParams): Promise<HelloResponse> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                name: params.name,
+            })
+
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/hello`, undefined, {query})
+            return await resp.json() as HelloResponse
+        }
+    }
 }
 
 

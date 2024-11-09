@@ -1,5 +1,5 @@
 import { Service } from 'encore.dev/service';
 
-export const name = 'auth';
+export const name = 'user';
 
-export default new Service('auth');
+export default new Service('user');
