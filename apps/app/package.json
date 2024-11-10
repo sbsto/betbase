@@ -22,6 +22,7 @@
 		"@tauri-apps/api": "^2",
 		"@tauri-apps/plugin-haptics": "^2.0.0",
 		"@tauri-apps/plugin-shell": "^2",
+		"class-variance-authority": "^0.7.0",
 		"siwe": "^2.3.2"
 	},
 	"devDependencies": {
