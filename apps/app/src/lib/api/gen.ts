@@ -58,16 +58,16 @@ export interface ClientOptions {
 
     /** Default RequestInit to be used for the client */
     requestInit?: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
+
+    /**
+     * Allows you to set the authentication data to be used for each
+     * request either by passing in a static object or by passing in
+     * a function which returns a new object for each request.
+     */
+    auth?: src.AuthParams | AuthDataGenerator
 }
 
 export namespace user {
-    export interface HelloParams {
-        name: string
-    }
-
-    export interface HelloResponse {
-        message: string
-    }
 
     export class ServiceClient {
         private baseClient: BaseClient
@@ -76,16 +76,47 @@ export namespace user {
             this.baseClient = baseClient
         }
 
-        public async hello(params: HelloParams): Promise<HelloResponse> {
-            // Convert our params into the objects we need for the request
-            const query = makeRecord<string, string | string[]>({
-                name: params.name,
-            })
-
+        public async getNonce(): Promise<src.GetNonceResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("GET", `/hello`, undefined, {query})
-            return await resp.json() as HelloResponse
+            const resp = await this.baseClient.callAPI("GET", `/nonce`)
+            return await resp.json() as src.GetNonceResponse
         }
+
+        public async getSession(): Promise<src.SessionResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/session`)
+            return await resp.json() as src.SessionResponse
+        }
+
+        public async verify(params: src.VerifyRequestPayload): Promise<src.VerifyResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/verify`, JSON.stringify(params))
+            return await resp.json() as src.VerifyResponse
+        }
+    }
+}
+
+export namespace src {
+    export interface AuthParams {
+        authorization: string
+    }
+
+    export interface GetNonceResponse {
+        nonce: string
+    }
+
+    export interface SessionResponse {
+        walletAddress: string
+        chainId: number
+    }
+
+    export interface VerifyRequestPayload {
+        message: string
+        signature: string
+    }
+
+    export interface VerifyResponse {
+        token: string
     }
 }
 
@@ -293,6 +324,11 @@ type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
     query?: Record<string, string | string[]>
 }
 
+// AuthDataGenerator is a function that returns a new instance of the authentication data required by this API
+export type AuthDataGenerator = () =>
+  | src.AuthParams
+  | Promise<src.AuthParams | undefined>
+  | undefined;
 
 // A fetcher is the prototype for the inbuilt Fetch function
 export type Fetcher = typeof fetch;
@@ -304,6 +340,7 @@ class BaseClient {
     readonly fetcher: Fetcher
     readonly headers: Record<string, string>
     readonly requestInit: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
+    readonly authGenerator?: AuthDataGenerator
 
     constructor(baseURL: string, options: ClientOptions) {
         this.baseURL = baseURL
@@ -325,9 +362,41 @@ class BaseClient {
         } else {
             this.fetcher = boundFetch
         }
+
+        // Setup an authentication data generator using the auth data token option
+        if (options.auth !== undefined) {
+            const auth = options.auth
+            if (typeof auth === "function") {
+                this.authGenerator = auth
+            } else {
+                this.authGenerator = () => auth
+            }
+        }
     }
 
     async getAuthData(): Promise<CallParameters | undefined> {
+        let authData: src.AuthParams | undefined;
+
+        // If authorization data generator is present, call it and add the returned data to the request
+        if (this.authGenerator) {
+            const mayBePromise = this.authGenerator();
+            if (mayBePromise instanceof Promise) {
+                authData = await mayBePromise;
+            } else {
+                authData = mayBePromise;
+            }
+        }
+
+        if (authData) {
+            const data: CallParameters = {};
+
+            data.headers = makeRecord<string, string>({
+                authorization: authData.authorization,
+            });
+
+            return data;
+        }
+
         return undefined;
     }
 

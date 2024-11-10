@@ -1,18 +1,18 @@
-import { secret } from "encore.dev/config";
-import * as jwt from "jsonwebtoken";
+import { secret } from 'encore.dev/config';
+import * as jwt from 'jsonwebtoken';
 
-const authSecret = secret("AUTH_SECRET")();
+const authSecret = secret('AUTH_SECRET')();
 
 export const generateAuthToken = ({
-  walletAddress,
-  chainId,
+	walletAddress,
+	chainId,
 }: {
-  walletAddress: string;
-  chainId: number;
+	walletAddress: string;
+	chainId: number;
 }) => {
-  const token = jwt.sign({ walletAddress, chainId }, authSecret, {
-    expiresIn: "1h",
-  });
+	const token = jwt.sign({ walletAddress, chainId }, authSecret, {
+		expiresIn: '1h',
+	});
 
-  return token;
+	return token;
 };

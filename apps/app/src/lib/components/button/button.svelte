@@ -5,13 +5,14 @@
 	const { label, variant, fluid, disabled, ...rest }: ButtonProps = $props();
 
 	const classes = cva(
-		'flex flex-row items-center justify-center rounded-full px-sm py-lg text-sm font-semibold',
+		'flex flex-row items-center justify-center rounded-2xl px-sm py-lg text-sm font-semibold',
 		{
 			variants: {
 				variant: {
-					primary: 'bg-button-primary-bg text-button-primary-fg hover:bg-button-primary-bg-hover',
+					primary:
+						'bg-button-primary-bg text-button-primary-fg transition duration-200 active:bg-button-primary-bg-hover active:scale-[98%]',
 					secondary:
-						'border border-button-secondary-border text-button-secondary-fg hover:bg-button-secondary-bg-hover'
+						'border border-button-secondary-border text-button-secondary-fg duration-200 active:bg-button-secondary-bg-hover active:scale-[98%]'
 				},
 				fluid: {
 					true: 'w-full',
