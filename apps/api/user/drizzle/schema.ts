@@ -7,7 +7,6 @@ import {
 	text,
 	timestamp,
 } from 'drizzle-orm/pg-core';
-import { generateNonce } from 'siwe';
 
 export const user = pgTable('user', {
 	walletAddress: text('wallet_address').primaryKey().notNull(),
@@ -23,7 +22,7 @@ export const nonce = pgTable(
 	'nonce',
 	{
 		id: text('id').primaryKey().$defaultFn(crypto.randomUUID),
-		value: text('value').$defaultFn(generateNonce).notNull(),
+		value: text('value').notNull(),
 		expiresAt: timestamp('expires_at')
 			.$defaultFn(() => {
 				const expiry = new Date();
