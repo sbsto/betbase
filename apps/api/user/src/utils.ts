@@ -1,5 +1,5 @@
 import { secret } from 'encore.dev/config';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 const authSecret = secret('AUTH_SECRET')();
 
